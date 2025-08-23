@@ -120,6 +120,11 @@
 			<artifactId>commons-compress</artifactId>
 			<version>1.26.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
 
 	</dependencies>
 	<dependencyManagement>
