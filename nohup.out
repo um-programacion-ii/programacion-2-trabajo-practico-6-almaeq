@@ -59,3 +59,6 @@ Caused by: java.nio.channels.UnresolvedAddressException
 	... 27 more
 2025-08-21 21:30:01,173 [3040669]   WARN - #o.j.i.maven - updateMavenProjects started: incremental=true, MavenProjectAware.reloadProject, sync selected 1 0 sistemaMicroservicios
 2025-08-21 21:30:02,097 [3041593]   WARN - #o.j.i.maven - updateMavenProjects finished: incremental=true, MavenProjectAware.reloadProject, sync selected 1 0 sistemaMicroservicios
+2025-08-21 22:01:14,582 [4914078]   WARN - #git4idea.merge.GitMergeUtil - Failed to load revision content for /home/alma/0prog2/sistemaMicroservicios/.gitignore (stage 1): 'fatal: path '.gitignore' is in the index, but not at stage 1
+hint: Did you mean ':2:.gitignore'?'
+Assuming missing side
