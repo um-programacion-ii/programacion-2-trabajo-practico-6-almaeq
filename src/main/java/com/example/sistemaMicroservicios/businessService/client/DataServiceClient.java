@@ -3,7 +3,6 @@ package com.example.sistemaMicroservicios.businessService.client;
 import com.example.sistemaMicroservicios.businessService.dto.CategoriaDTO;
 import com.example.sistemaMicroservicios.businessService.dto.InventarioDTO;
 import com.example.sistemaMicroservicios.businessService.dto.ProductoDTO;
-import com.example.sistemaMicroservicios.businessService.dto.ProductoRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,4 +34,7 @@ public interface DataServiceClient {
 
     @GetMapping("/data/inventario/stock-bajo")
     List<InventarioDTO> obtenerProductosConStockBajo();
+
+    @GetMapping("/data/inventario/{productoId}")
+    InventarioDTO obtenerInventarioPorProductoId(@PathVariable Long productoId);
 }
