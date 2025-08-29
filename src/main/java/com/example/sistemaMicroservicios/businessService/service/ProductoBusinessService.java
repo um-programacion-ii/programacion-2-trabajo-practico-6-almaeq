@@ -2,7 +2,10 @@ package com.example.sistemaMicroservicios.businessService.service;
 
 import com.example.sistemaMicroservicios.businessService.client.DataServiceClient;
 import com.example.sistemaMicroservicios.businessService.dto.ProductoDTO;
+import com.example.sistemaMicroservicios.businessService.dto.ProductoRequest;
+import com.example.sistemaMicroservicios.businessService.exception.MicroserviceCommunicationException;
 import com.example.sistemaMicroservicios.businessService.exception.ProductoNoEncontradoException;
+import com.example.sistemaMicroservicios.businessService.exception.ValidacionNegocioException;
 import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

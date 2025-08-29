@@ -35,13 +35,6 @@ public class CategoriaService {
         return convertirADto(categoria);
     }
 
-    public Categoria guardar(Categoria categoria) {
-        if (categoriaRepository.existsByNombreIgnoreCase(categoria.getNombre())) {
-            throw new CategoriaDuplicadaException("La categoría ya está registrada: " + categoria.getNombre());
-        }
-        return categoriaRepository.save(categoria);
-    }
-
     public CategoriaDTO crearCategoria(CategoriaDTO categoriaDto) {
         categoriaRepository.findByNombre(categoriaDto.getNombre()).ifPresent(c -> {
             throw new CategoriaDuplicadaException("Ya existe una categoría con el nombre: " + categoriaDto.getNombre());

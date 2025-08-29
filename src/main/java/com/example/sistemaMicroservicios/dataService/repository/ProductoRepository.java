@@ -11,5 +11,5 @@ import java.util.List;
 public interface ProductoRepository extends JpaRepository<Producto, Long> {
     Boolean existsByNombreIgnoreCase(String nombre);
     @Query("SELECT e FROM Producto e WHERE e.categoria.nombre = :nombreCategoria")
-    List<Producto> findByNombreCategoria(String nombreCategoria);
+    List<Producto> findByCategoriaId(Long categoriaId);
 }
