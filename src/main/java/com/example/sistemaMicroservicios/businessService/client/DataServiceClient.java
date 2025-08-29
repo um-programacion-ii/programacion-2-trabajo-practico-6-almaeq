@@ -3,6 +3,7 @@ package com.example.sistemaMicroservicios.businessService.client;
 import com.example.sistemaMicroservicios.businessService.dto.CategoriaDTO;
 import com.example.sistemaMicroservicios.businessService.dto.InventarioDTO;
 import com.example.sistemaMicroservicios.businessService.dto.ProductoDTO;
+import com.example.sistemaMicroservicios.businessService.dto.ProductoRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,15 +27,24 @@ public interface DataServiceClient {
     @DeleteMapping("/data/productos/{id}")
     void eliminarProducto(@PathVariable Long id);
 
-    @GetMapping("/data/productos/categoria/{nombre}")
-    List<ProductoDTO> obtenerProductosPorCategoria(@PathVariable String nombre);
+    @GetMapping(value = "/data/productos", params = "categoria")
+    List<ProductoDTO> obtenerProductosPorCategoria(@RequestParam("categoria") String nombre);
 
     @GetMapping("/data/categorias")
     List<CategoriaDTO> obtenerTodasLasCategorias();
+
+    @PutMapping("/data/categorias/{id}")
+    CategoriaDTO actualizarCategoria(@PathVariable Long id, @RequestBody CategoriaDTO categoriaDTO);
+
+    @DeleteMapping("/data/categorias/{id}")
+    void eliminarCategoria(@PathVariable Long id);
 
     @GetMapping("/data/inventario/stock-bajo")
     List<InventarioDTO> obtenerProductosConStockBajo();
 
     @GetMapping("/data/inventario/{productoId}")
     InventarioDTO obtenerInventarioPorProductoId(@PathVariable Long productoId);
+
+    @PatchMapping("/data/inventario/{productoId}")
+    InventarioDTO actualizarStock(@PathVariable Long productoId, @RequestBody Integer cantidad);
 }

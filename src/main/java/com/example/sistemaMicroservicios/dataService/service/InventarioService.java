@@ -22,6 +22,12 @@ public class InventarioService {
         this.inventarioRepository = inventarioRepository;
     }
 
+    public InventarioDTO obtenerInventarioPorProductoId(Long productoId) {
+        Inventario inventario = inventarioRepository.findByProductoId(productoId)
+                .orElseThrow(() -> new InventarioNoEncontradoException("No se encontró inventario para el producto con ID: " + productoId));
+        return convertirAInventarioDTO(inventario);
+    }
+
     public List<InventarioDTO> obtenerProductosConStockBajo() {
         return inventarioRepository.findByStockBajo().stream()
                 .map(this::convertirAInventarioDTO)

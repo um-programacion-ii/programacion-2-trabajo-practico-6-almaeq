@@ -2,7 +2,10 @@ package com.example.sistemaMicroservicios.businessService.service;
 
 import com.example.sistemaMicroservicios.businessService.client.DataServiceClient;
 import com.example.sistemaMicroservicios.businessService.dto.ProductoDTO;
+import com.example.sistemaMicroservicios.businessService.dto.ProductoRequest;
+import com.example.sistemaMicroservicios.businessService.exception.MicroserviceCommunicationException;
 import com.example.sistemaMicroservicios.businessService.exception.ProductoNoEncontradoException;
+import com.example.sistemaMicroservicios.businessService.exception.ValidacionNegocioException;
 import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -57,6 +60,28 @@ public class ProductoBusinessService {
 
         if (request.getStock() < 0) {
             throw new ValidacionNegocioException("El stock no puede ser negativo");
+        }
+    }
+
+    public BigDecimal calcularValorTotalInventario() {
+        log.info("Iniciando cálculo del valor total del inventario.");
+        try {
+            // Obtiene todos los productos desde el data-service.
+            List<ProductoDTO> todosLosProductos = dataServiceClient.obtenerTodosLosProductos();
+
+            // Usa un Stream para calcular el valor total.
+            BigDecimal valorTotal = todosLosProductos.stream()
+                    // Para cada producto, multiplica su precio por su stock.
+                    .map(producto -> producto.getPrecio().multiply(new BigDecimal(producto.getStock())))
+                    // Suma todos los subtotales.
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+            log.info("Cálculo finalizado. El valor total del inventario es: {}", valorTotal);
+            return valorTotal;
+
+        } catch (FeignException e) {
+            log.error("Error de comunicación al intentar obtener todos los productos para el cálculo de inventario.", e);
+            throw new MicroserviceCommunicationException("No se pudo calcular el valor del inventario debido a un error de comunicación.");
         }
     }
 }

@@ -13,6 +13,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -83,6 +84,20 @@ public class ProductoService {
 
         Producto productoActualizado = productoRepository.save(productoExistente);
         return convertirAProductoDTO(productoActualizado);
+    }
+
+    public List<ProductoDTO> buscarPorCategoriaNombre(String nombreCategoria) {
+        // Primero, encontramos la categoría por su nombre
+        return categoriaRepository.findByNombre(nombreCategoria)
+                .map(categoria -> {
+                    // Si la categoría existe, buscamos los productos por su ID
+                    List<Producto> productos = productoRepository.findByCategoriaId(categoria.getId());
+                    return productos.stream()
+                            .map(this::convertirAProductoDTO)
+                            .collect(Collectors.toList());
+                })
+                // Si la categoría no existe, devolvemos una lista vacía
+                .orElse(Collections.emptyList());
     }
 
     public void eliminarProducto(Long id) {
