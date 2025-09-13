@@ -1,6 +1,5 @@
 package com.example.dataService.controller;
 
-import com.example.businessService.client.DataServiceClient;
 import com.example.dataService.dto.CategoriaDTO;
 import com.example.dataService.dto.InventarioDTO;
 import com.example.dataService.dto.ProductoDTO;
@@ -49,8 +48,8 @@ class DataControllerTest {
     @MockBean InventarioService inventarioService;
 
     // Lo incluyo porque aparece en tu proyecto y evita fallos de contexto
-    @MockBean
-    DataServiceClient dataServiceClient;
+    //@MockBean
+    //DataServiceClient dataServiceClient;
 
     // --------- Fixtures (se rellenan en @BeforeEach) ----------
     private ProductoDTO prod1;
@@ -301,7 +300,7 @@ class DataControllerTest {
 
         when(inventarioService.actualizarStock(1L, 15)).thenReturn(actualizado);
 
-        mockMvc.perform(patch("/data/inventario/1")
+        mockMvc.perform(put("/data/inventario/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(15)))
                 .andExpect(status().isOk())

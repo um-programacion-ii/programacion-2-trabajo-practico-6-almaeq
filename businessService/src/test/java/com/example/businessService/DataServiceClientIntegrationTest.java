@@ -19,10 +19,7 @@ import java.util.List;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest(
-        classes = com.example.dataService.DataServiceApplication.class,
-        webEnvironment = SpringBootTest.WebEnvironment.NONE
-)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @ActiveProfiles("test")
 @EnableFeignClients(clients = DataServiceClient.class)
 @AutoConfigureWireMock(port = 0)
@@ -84,23 +81,21 @@ class DataServiceClientIntegrationTest {
 
     @Test
     void crearProducto_enviaJsonYDevuelveDTO() throws Exception {
-        // ✅ Tu ProductoRequest real: nombre, descripcion, precio, categoriaId, stock, stockMinimo
         var req = new ProductoRequest(
                 "Notebook",
                 "14\"",
                 new BigDecimal("999.99"),
-                5L,   // categoriaId
-                20,   // stock
-                3     // stockMinimo
+                5L,
+                20,
+                3
         );
 
-        // El data-service responde con ProductoDTO (categoría como String y destacado boolean)
         var resp = new ProductoDTO(
                 100L,
                 req.getNombre(),
                 req.getDescripcion(),
                 req.getPrecio(),
-                "Computación", // nombre de la categoría (no el id)
+                "Computación",
                 req.getStock(),
                 false
         );

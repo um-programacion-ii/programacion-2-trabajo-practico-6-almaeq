@@ -153,3 +153,64 @@ Quería ver qué otra cosa se podía agregar y no se me ocurría
 ### Aprendizajes Obtenidos:
 - Con el primer ejemplo dado, terminé de entender cómo es la conexión entre las request, el DataServiceInterface y los services
 
+
+## Prompt 2: error
+
+### Prompt Utilizado: me da esto: [Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-09-12T23:50:40.377-03:00 ERROR 31173 --- [businessService] [  restartedMain] o.s.boot.SpringApplication               : Application run failed
+java.lang.IllegalArgumentException: http://${data.service.url} is malformed
+at org.springframework.cloud.openfeign.FeignClientsRegistrar.getUrl(FeignClientsRegistrar.java:127) ~[spring-cloud-openfeign-core-4.3.0.jar:4.3.0]]
+
+### Respuesta Recibida:
+
+¡Entendido! Este es un error clásico cuando se configura Feign y es el último paso para que todo funcione. Vamos a solucionarlo.
+
+🤔 Análisis del Error: ¿Qué está pasando?
+El error java.lang.IllegalArgumentException: http://${data.service.url} is malformed es muy claro:
+
+Tu business-service está intentando crear el cliente Feign (DataServiceClient) para comunicarse con el data-service.
+
+En la configuración de ese cliente, le dijiste que la URL del data-service es http://${data.service.url}.
+
+Sin embargo, cuando ejecutas la aplicación con el perfil mysql (o cualquier otro perfil local), Spring no encuentra un valor para la propiedad data.service.url.
+
+Como no la encuentra, intenta usar el texto literal http://${data.service.url}, lo cual no es una URL válida y la aplicación falla al arrancar.
+
+✅ La Solución: Definir la URL para Entornos Locales
+Necesitamos decirle al business-service a qué dirección debe apuntar cuando corre en tu máquina. Como el data-service se ejecuta localmente, la dirección será http://localhost:8081.
+
+Para solucionar esto, vamos a añadir esta configuración en el business-service.
+
+1. Edita el archivo application.properties del business-service
+   Abre el siguiente archivo:
+   sistemaMicroservicios/businessService/src/main/resources/application.properties
+
+Y añade esta línea al final. Esto establecerá la URL por defecto para tu data-service:
+
+````bash
+data.service.url=http://localhost:8081
+````
+Este cambio le dará a Spring el valor que necesita para construir el cliente Feign correctamente.
+
+⚠️ Nota Importante: Posible Conflicto de Puertos
+He notado que en tu configuración para los perfiles dev y mysql, tanto el data-service como el business-service intentan usar el mismo puerto 8081. Esto causará un error de "puerto en uso" (Port already in use).
+
+Para evitarlo, te recomiendo hacer un pequeño ajuste para que siempre usen puertos diferentes. Por ejemplo, que el business-service siempre use el 8080.
+
+Ajusta el puerto en business-service
+Abre businessService/src/main/resources/application-dev.yaml y asegúrate de que el puerto sea 8080.
+
+Abre businessService/src/main/resources/application-mysql.yaml y asegúrate de que el puerto sea 8080.
+
+Abre businessService/src/main/resources/application-postgres.yaml y asegúrate de que el puerto sea 8080.
+
+Con estos dos cambios (añadir la URL y estandarizar los puertos), tus servicios podrán iniciarse y comunicarse sin problemas cuando sigas las instrucciones de tu profesor.
+
+### Modificaciones Realizadas:
+- No realicé modificaciones a lo que me dió
+
+### Explicación del Prompt:
+Me daba un error que no entendía
+
+### Aprendizajes Obtenidos:
+Como comunicar el BusinessService con el DataService

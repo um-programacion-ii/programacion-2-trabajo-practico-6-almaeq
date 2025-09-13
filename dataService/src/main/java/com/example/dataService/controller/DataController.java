@@ -173,7 +173,7 @@ public class DataController {
      * @param cantidad La cantidad a sumar (positivo) o restar (negativo) del stock actual.
      * @return ResponseEntity con el InventarioDTO actualizado y estado 200 OK.
      */
-    @PatchMapping("/inventario/{productoId}")
+    @PutMapping("/inventario/{productoId}") // <-- CAMBIADO DE @PatchMapping A @PutMapping
     public ResponseEntity<InventarioDTO> actualizarStock(@PathVariable Long productoId, @RequestBody Integer cantidad) {
         InventarioDTO inventarioActualizado = inventarioService.actualizarStock(productoId, cantidad);
         return ResponseEntity.ok(inventarioActualizado);

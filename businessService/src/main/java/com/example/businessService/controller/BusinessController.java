@@ -74,6 +74,12 @@ public class BusinessController {
 
     // --- Endpoints de Categorías ---
 
+    @PostMapping("/categorias")
+    public ResponseEntity<CategoriaDTO> registrarNuevaCategoria(@RequestBody CategoriaDTO request) {
+        CategoriaDTO nuevaCategoria = categoriaBusinessService.crearCategoria(request);
+        return new ResponseEntity<>(nuevaCategoria, HttpStatus.CREATED);
+    }
+
     /**
      * Obtiene una lista de todas las categorías de productos.
      * @return ResponseEntity con una lista de CategoriaDTO y estado 200 OK.
@@ -107,7 +113,7 @@ public class BusinessController {
      * @param cantidad La cantidad a sumar o restar del stock actual.
      * @return ResponseEntity con el InventarioDTO actualizado y estado 200 OK.
      */
-    @PatchMapping("/inventario/{productoId}/actualizar-stock")
+    @PutMapping("/inventario/{productoId}/actualizar-stock") // <-- CAMBIADO DE @PatchMapping A @PutMapping
     public ResponseEntity<InventarioDTO> actualizarStockProducto(
             @PathVariable Long productoId,
             @RequestBody Integer cantidad) {

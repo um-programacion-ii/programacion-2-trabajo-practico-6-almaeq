@@ -68,4 +68,37 @@ class CategoriaBusinessServiceTest {
         // Verificar que el método del cliente fue llamado
         verify(dataServiceClient, times(1)).obtenerTodasLasCategorias();
     }
+
+    @Test
+    void crearCategoria_cuandoClienteFunciona_deberiaDevolverCategoriaCreada() {
+        // Preparación
+        CategoriaDTO categoriaParaCrear = new CategoriaDTO(null, "Deportes", "Artículos deportivos");
+        CategoriaDTO categoriaCreada = new CategoriaDTO(3L, "Deportes", "Artículos deportivos");
+
+        when(dataServiceClient.crearCategoria(categoriaParaCrear)).thenReturn(categoriaCreada);
+
+        // Ejecución
+        CategoriaDTO resultado = categoriaBusinessService.crearCategoria(categoriaParaCrear);
+
+        // Verificación
+        assertNotNull(resultado);
+        assertEquals(3L, resultado.getId());
+        assertEquals("Deportes", resultado.getNombre());
+        verify(dataServiceClient, times(1)).crearCategoria(categoriaParaCrear);
+    }
+
+    @Test
+    void crearCategoria_cuandoClienteFalla_deberiaLanzarExcepcion() {
+        // Preparación
+        CategoriaDTO categoriaParaCrear = new CategoriaDTO(null, "Deportes", "Artículos deportivos");
+        when(dataServiceClient.crearCategoria(categoriaParaCrear))
+                .thenThrow(new FeignException.InternalServerError("Error en el servidor", dummyRequest, null, null));
+
+        // Ejecución y Verificación
+        assertThrows(MicroserviceCommunicationException.class, () -> {
+            categoriaBusinessService.crearCategoria(categoriaParaCrear);
+        });
+
+        verify(dataServiceClient, times(1)).crearCategoria(categoriaParaCrear);
+    }
 }
