@@ -1,0 +1,7 @@
+spring:
+  config:
+    activate:
+      on-profile: mysql
+
+server:
+  port: 8080

@@ -1,4 +1,5 @@
 services:
+  # ======== BASES DE DATOS ========
   mysql:
     image: mysql:8.4
     container_name: microservices_mysql
@@ -7,16 +8,20 @@ services:
       MYSQL_DATABASE: microservices_db
       MYSQL_USER: microservices_user
       MYSQL_PASSWORD: microservices_pass
+      TZ: America/Argentina/Mendoza
     ports:
-      - "3307:3306"
+      - "3307:3306"   # host:container
     volumes:
       - mysql_data:/var/lib/mysql
     networks:
       - microservices_network
+    restart: unless-stopped
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      timeout: 20s
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 --protocol=TCP -u root -p$${MYSQL_ROOT_PASSWORD} --silent"]
+      interval: 10s
+      timeout: 5s
       retries: 10
+      start_period: 20s
 
   postgres:
     image: postgres:16
@@ -25,16 +30,82 @@ services:
       POSTGRES_DB: microservices_db
       POSTGRES_USER: microservices_user
       POSTGRES_PASSWORD: microservices_pass
+      TZ: America/Argentina/Mendoza
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - microservices_network
+    restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U microservices_user -d microservices_db"]
-      timeout: 20s
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB} -h 127.0.0.1 -p 5432"]
+      interval: 10s
+      timeout: 5s
       retries: 10
+      start_period: 20s
+
+  # ======== MICROSERVICIOS ========
+  data-service:
+    build:
+      context: ./dataService
+    container_name: data-service
+    depends_on:
+      mysql:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    environment:
+      TZ: America/Argentina/Mendoza
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-dev} # Default to dev if not set
+      # MySQL connection
+      SPRING_DATASOURCE_URL_MYSQL: jdbc:mysql://mysql:3306/microservices_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Argentina/Mendoza
+      SPRING_DATASOURCE_USERNAME_MYSQL: microservices_user
+      SPRING_DATASOURCE_PASSWORD_MYSQL: microservices_pass
+      # PostgreSQL connection
+      SPRING_DATASOURCE_URL_POSTGRES: jdbc:postgresql://postgres:5432/microservices_db
+      SPRING_DATASOURCE_USERNAME_POSTGRES: microservices_user
+      SPRING_DATASOURCE_PASSWORD_POSTGRES: microservices_pass
+      # Actuator endpoints
+      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: health,info
+      MANAGEMENT_ENDPOINT_HEALTH_PROBES_ENABLED: "true"
+    ports:
+      - "8081:8081"
+    networks:
+      - microservices_network
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -fsS http://localhost:8081/actuator/health | grep -q '\"status\":\"UP\"'" ]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 25s
+
+  business-service:
+    build:
+      context: ./businessService
+    container_name: business-service
+    depends_on:
+      data-service:
+        condition: service_healthy
+    environment:
+      TZ: America/Argentina/Mendoza
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-dev}
+      DATA_SERVICE_URL: http://data-service:8081
+      # Actuator endpoints
+      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: health,info
+      MANAGEMENT_ENDPOINT_HEALTH_PROBES_ENABLED: "true"
+    ports:
+      - "8080:8080"
+    networks:
+      - microservices_network
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -fsS http://localhost:8080/actuator/health | grep -q '\"status\":\"UP\"'" ]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 25s
 
 volumes:
   mysql_data:
