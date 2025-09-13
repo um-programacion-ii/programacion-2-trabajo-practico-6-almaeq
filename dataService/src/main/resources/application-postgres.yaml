@@ -3,7 +3,7 @@ spring:
     activate:
       on-profile: postgres
   datasource:
-    url: jdbc:postgresql://localhost:5432/microservices_db
+    url: ${SPRING_DATASOURCE_URL_POSTGRES:jdbc:postgresql://localhost:5432/microservices_db}
     driver-class-name: org.postgresql.Driver
     username: microservices_user
     password: microservices_pass

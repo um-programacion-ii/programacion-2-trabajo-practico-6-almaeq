@@ -979,10 +979,15 @@ class DataControllerIntegrationTest {
 
 ## 🐳 Instrucciones para Docker
 
-### Levantar Bases de Datos
+Existen dos métodos principales para ejecutar el sistema, elige el que mejor se adapte a tus necesidades.
+
+### Método 1: Desarrollo Local (Híbrido)
+Este método es ideal para desarrollar y depurar activamente los microservicios, ya que permite reinicios en caliente (hot-reload).
+
+#### 1. Levantar Bases de Datos
 ```bash
 # Levantar MySQL y PostgreSQL
-docker compose up -d
+docker compose up -d mysql postgres
 
 # Verificar que los contenedores estén corriendo
 docker compose ps
@@ -991,7 +996,10 @@ docker compose ps
 docker compose logs -f
 ```
 
-### Ejecutar Microservicios con Diferentes Profiles
+#### 2. Ejecutar los Microservicios con Maven
+Abre dos terminales separadas y ejecuta cada servicio con el perfil deseado.
+
+Para H2 (no requiere Docker):
 ```bash
 # Con H2 (desarrollo)
 # Terminal 1 - Data Service
@@ -1001,7 +1009,11 @@ cd data-service
 # Terminal 2 - Business Service
 cd business-service
 ./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
+````
+Para MySQL y  PostgreSQL  (requiere el paso 1):
 
+
+```bash
 # Con MySQL
 # Terminal 1 - Data Service
 cd data-service
@@ -1021,14 +1033,28 @@ cd business-service
 ./mvnw spring-boot:run -Dspring-boot.run.profiles=postgres
 ```
 
-### Detener Bases de Datos
+### Método 2: Ecosistema Completo con Docker (Todo en uno)
+
+Este método es ideal para probar el sistema completo tal como funcionaría en un entorno de producción. No necesitas ejecutar los comandos ./mvnw.
+
+#### 1. Levantar todo el sistema
+````bash
+# Desde la raíz del proyecto, para levantar MySQL
+SPRING_PROFILES_ACTIVE=mysql docker-compose up --build
+
+# O para levantar PostgreSQL
+SPRING_PROFILES_ACTIVE=postgres docker-compose up --build
+````
+   Con un solo comando, Docker construirá las imágenes de tus microservicios y levantará todos los contenedores (aplicaciones y bases de datos).
+
+#### Detener todos los contenedores de Docker (base de datos y/o aplicaciones)
 ```bash
 # Detener contenedores
 docker compose down
 
 # Detener y eliminar volúmenes
 docker compose down -v
-```
+````
 
 ## 📚 Recursos Adicionales
 
