@@ -36,6 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 // Crea el bean MockMvc para hacer requests “falsos” a tus endpoints.
 @AutoConfigureMockMvc(addFilters = false)
 @ActiveProfiles("test")
+@TestPropertySource(properties = "data.service.url=http://dummy-url.com")
 class BusinessControllerTest {
 
     @Autowired MockMvc mockMvc;
@@ -111,7 +112,7 @@ class BusinessControllerTest {
         var inv = new InventarioDTO(9L, p1, 18, 5, LocalDateTime.now());
         when(inventarioBusinessService.actualizarStock(eq(1L), eq(8))).thenReturn(inv);
 
-        mockMvc.perform(patch("/api/inventario/1/actualizar-stock")
+        mockMvc.perform(put("/api/inventario/1/actualizar-stock")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(8)))
                 .andExpect(status().isOk())

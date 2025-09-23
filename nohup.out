@@ -1,0 +1,38 @@
+2025-09-23 20:02:28,693 [   3906]   WARN - #c.i.s.c.i.StationSocketConnectionLoop - Discovery connection failed with NoSuchFileException (/run/user/1000/jb.station.sock)
+2025-09-23 20:02:29,919 [   5132]   WARN - #c.i.o.v.n.p.PersistentFSImpl - Can't find root[#283677] in persistence
+2025-09-23 20:06:25,516 [ 240729]   WARN - #c.i.o.f.i.EditorCompositeModelManager - Cannot use saved provider list (savedProviders={split-provider[text-editor;markdown-preview-editor]=[Element: <state/>]}, resolvedProvider=[])
+2025-09-23 20:06:25,787 [ 241000]   WARN - #c.i.o.v.n.p.PersistentFSImpl - Can't find root[#283677] in persistence
+2025-09-23 20:06:27,444 [ 242657]   WARN - #o.j.i.maven - MavenProjectsTree is inconsistent
+2025-09-23 20:06:27,459 [ 242672]   WARN - #o.j.i.maven - updateAllMavenProjects started: incremental=false, MavenProjectsManager.onProjectStartup sistemaMicroservicios
+2025-09-23 20:06:28,219 [ 243432]   WARN - #o.j.i.maven - updateAllMavenProjects finished: incremental=false, MavenProjectsManager.onProjectStartup sistemaMicroservicios
+2025-09-23 20:06:28,456 [ 243669]   WARN - #c.i.o.v.i.h.RemoteFileInfoImpl - Virtual local file not found for /home/alma/.cache/JetBrains/IntelliJIdea2025.1/httpFileSystem/catalog.json
+2025-09-23 20:06:34,707 [ 249920]   WARN - #o.j.k.i.s.r.KotlinCompilerReferenceIndexStorage - kotlin-data-container is not found
+2025-09-23 20:06:34,773 [ 249986]   WARN - #c.i.j.w.n.WebTypesNpmLoader - Failed to fetch packages for '@web-types' (Full Text): Request failed with status code 429
+2025-09-23 20:06:45,627 [ 260840]   WARN - #org.intellij.plugins.markdown.ui.preview.jcef.impl.JcefBrowserPipeImpl - No subscribers for documentReady!
+Attached data: 
+2025-09-23 20:07:14,428 [ 289641]   WARN - #o.j.k.i.s.r.KotlinCompilerReferenceIndexStorage - kotlin-data-container is not found
+2025-09-23 20:07:48,058 [ 323271]   WARN - #o.j.k.i.s.r.KotlinCompilerReferenceIndexStorage - kotlin-data-container is not found
+2025-09-23 20:07:57,510 [ 332723]   WARN - #o.j.k.i.s.r.KotlinCompilerReferenceIndexStorage - kotlin-data-container is not found
+2025-09-23 20:08:05,113 [ 340326]   WARN - #o.j.k.i.s.r.KotlinCompilerReferenceIndexStorage - kotlin-data-container is not found
+2025-09-23 20:08:17,338 [ 352551]   WARN - #o.j.k.i.s.r.KotlinCompilerReferenceIndexStorage - kotlin-data-container is not found
+2025-09-23 20:08:35,472 [ 370685]   WARN - #o.j.k.i.s.r.KotlinCompilerReferenceIndexStorage - kotlin-data-container is not found
+2025-09-23 20:09:13,700 [ 408913]   WARN - #o.j.k.i.s.r.KotlinCompilerReferenceIndexStorage - kotlin-data-container is not found
+2025-09-23 20:09:34,204 [ 429417]   WARN - #o.j.k.i.s.r.KotlinCompilerReferenceIndexStorage - kotlin-data-container is not found
+2025-09-23 20:09:41,955 [ 437168]   WARN - #o.j.k.i.s.r.KotlinCompilerReferenceIndexStorage - kotlin-data-container is not found
+2025-09-23 20:09:49,609 [ 444822]   WARN - #o.j.k.i.s.r.KotlinCompilerReferenceIndexStorage - kotlin-data-container is not found
+2025-09-23 20:10:01,300 [ 456513]   WARN - #o.j.k.i.s.r.KotlinCompilerReferenceIndexStorage - kotlin-data-container is not found
+2025-09-23 20:10:27,143 [ 482356]   WARN - #o.j.k.i.s.r.KotlinCompilerReferenceIndexStorage - kotlin-data-container is not found
+2025-09-23 20:10:50,977 [ 506190]   WARN - #o.j.k.i.s.r.KotlinCompilerReferenceIndexStorage - kotlin-data-container is not found
+2025-09-23 20:11:31,915 [ 547128]   WARN - #o.j.k.i.s.r.KotlinCompilerReferenceIndexStorage - kotlin-data-container is not found
+2025-09-23 20:11:50,891 [ 566104]   WARN - #o.j.k.i.s.r.KotlinCompilerReferenceIndexStorage - kotlin-data-container is not found
+2025-09-23 20:11:57,921 [ 573134]   WARN - #o.j.k.i.s.r.KotlinCompilerReferenceIndexStorage - kotlin-data-container is not found
+2025-09-23 20:15:48,894 [ 804107]   WARN - #o.j.k.i.s.r.KotlinCompilerReferenceIndexStorage - kotlin-data-container is not found
+2025-09-23 20:19:58,124 [1053337]   WARN - #o.j.k.i.s.r.KotlinCompilerReferenceIndexStorage - kotlin-data-container is not found
+2025-09-23 20:20:33,614 [1088827]   WARN - org.apache.velocity.deprecation - configuration key 'resource.loader' has been deprecated in favor of 'resource.loaders'
+2025-09-23 20:20:33,615 [1088828]   WARN - org.apache.velocity.deprecation - configuration key 'includes.resource.loader.class' has been deprecated in favor of 'resource.loader.includes.class'
+2025-09-23 20:20:43,923 [1099136]   WARN - #o.j.k.i.s.r.KotlinCompilerReferenceIndexStorage - kotlin-data-container is not found
+2025-09-23 20:20:59,693 [1114906]   WARN - #o.j.k.i.s.r.KotlinCompilerReferenceIndexStorage - kotlin-data-container is not found
+2025-09-23 20:24:47,252 [1342465]   WARN - #o.j.k.i.s.r.KotlinCompilerReferenceIndexStorage - kotlin-data-container is not found
+2025-09-23 20:30:30,610 [1685823]   WARN - #o.j.k.i.s.r.KotlinCompilerReferenceIndexStorage - kotlin-data-container is not found
+2025-09-23 20:31:01,518 [1716731]   WARN - #o.j.k.i.s.r.KotlinCompilerReferenceIndexStorage - kotlin-data-container is not found
+2025-09-23 20:31:09,661 [1724874]   WARN - #o.j.k.i.s.r.KotlinCompilerReferenceIndexStorage - kotlin-data-container is not found
