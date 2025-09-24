@@ -21,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @ActiveProfiles("test")
-@EnableFeignClients(clients = DataServiceClient.class)
 @AutoConfigureWireMock(port = 0)
 @TestPropertySource(properties = {
         "data.service.url=http://localhost:${wiremock.server.port}",

@@ -37,7 +37,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(controllers = DataController.class, excludeAutoConfiguration = FeignAutoConfiguration .class)
 @AutoConfigureMockMvc(addFilters = false)
 @ActiveProfiles("test")
-//@TestPropertySource(properties = "data.service.url=http://localhost:8080")
 class DataControllerTest {
 
     @Autowired MockMvc mockMvc;
